@@ -1,0 +1,8 @@
+malloc
+
+static
+debug
+gprof
+*.o
+*.a
+*.so

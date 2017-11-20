@@ -1,0 +1,11 @@
+language: c
+
+compiler:
+    - gcc
+
+install:
+
+script:
+    make libft.a
+    make libft_debug.a
+    make libft.so
