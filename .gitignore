@@ -1,8 +1,10 @@
 malloc
+malloc_debug
 
 static
 debug
 gprof
+
 *.o
 *.a
 *.so
