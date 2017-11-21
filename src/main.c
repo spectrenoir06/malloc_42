@@ -6,7 +6,7 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:03:30 by adoussau          #+#    #+#             */
-/*   Updated: 2017/11/20 23:40:09 by adoussau         ###   ########.fr       */
+/*   Updated: 2017/11/21 04:58:40 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 t_page *pages = NULL;
 
 #define page_size 4096*2
+
+
+void split_block() {
+
+}
 
 void	*malloc_test(size_t s) {
 	if (pages == NULL) {
@@ -39,26 +44,27 @@ void	*malloc_test(size_t s) {
 			ptr->prev = NULL;
 			ptr->next = NULL;
 			ptr->data = NULL;
-			ptr->blocks_nb = 0;
+			ptr->blocks_nb = 0xffffffff;
 
-			t_block *block = ptr + sizeof(t_page);
+			t_block *block = ptr + 1;
 			block->size = page_size - sizeof(t_block);
 			block->prev = NULL;
 			block->next = NULL;
 			block->state = 0;
 
 			ptr->data = block;
-			ptr->blocks_nb++;
-			printf("New block\n" );
+			//ptr->blocks_nb++;
+			printf("New block\n");
 			pages = ptr;
+			return (ptr->data + 1);
 		}
 	}
 }
-
-
 int		main(int argc, char **argv)
 {
-	printf("%d\n",getpagesize());
-	char * ptr = (char *)malloc_test(100);
+	printf("%d\n", getpagesize());
+	char * str = (char *)malloc_test(10);
+	memcpy(str, "0123456789", 10);
+
 	return (0);
 }
