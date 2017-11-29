@@ -6,7 +6,7 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:45:53 by adoussau          #+#    #+#             */
-/*   Updated: 2017/11/29 18:42:19 by adoussau         ###   ########.fr       */
+/*   Updated: 2017/11/29 22:35:31 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #ifndef MALLOC_H
 # define MALLOC_H
 
-# define TINY_SIZE 500//(2 * getpagesize())
+# define TINY_SIZE (2 * getpagesize())
 # define TINY_MAX_ALLOC 128
 # define TINY_TYPE 1
 
@@ -28,7 +28,7 @@
 typedef struct		s_block
 {
 	struct s_block	*next;
-	// struct s_block	*prev;
+	struct s_block	*prev;
 	size_t			size;
 	char			state;
 }					t_block;
