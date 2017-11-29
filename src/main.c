@@ -6,7 +6,7 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:03:30 by adoussau          #+#    #+#             */
-/*   Updated: 2017/11/29 18:47:44 by adoussau         ###   ########.fr       */
+/*   Updated: 2017/11/29 18:54:28 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void split_block(t_page *page, t_block *block, size_t size) {
 	// printf("Split bloc	k\n");
 	size_t size_new = block->size - sizeof(t_block) - size;
 
-	printf("splitblock: block->size: %d size: %d size_new: %d\n",block->size, size,size_new);
+	printf("splitblock: block->size: %ld size: %ld size_new: %ld\n",block->size, size,size_new);
 
 	t_block	*new_blocks = NULL;
 
@@ -121,7 +121,7 @@ t_page	*allocate_new_page(size_t s) {
 	return NULL;
 }
 
-t_block *malloc_test2(size_t s) {
+void *ft_malloc(size_t s) {
 	t_page *ptr_page = NULL;
 	// t_page *last_page = NULL;
 
@@ -167,9 +167,9 @@ void print_block(t_block *b) {
 
 void print_page(t_page *p) {
 	printf("\t------------Page------------\n");
-	printf("\tSize:   %zu  (real: %d)\n", p->size, p->size + sizeof(t_page));
-	printf("\tblocks: %zu\n", p->blocks_nb);
-	printf("\ttype:   %zu\n", p->type);
+	printf("\tSize:   %ld  (real: %ld)\n", p->size, p->size + sizeof(t_page));
+	printf("\tblocks: %d\n", p->blocks_nb);
+	printf("\ttype:   %d\n", p->type);
 	t_block *b = p->data;
 	while (b) {
 		print_block(b);
@@ -187,35 +187,32 @@ void print_pages(t_page *p) {
 
 int		main(int argc, char **argv)
 {
+	(void)argc;
+	(void)argv;
 	printf("getpagesize() = %d\n", getpagesize());
 
-	printf("sizeof(t_page)=%d\n" , sizeof(t_page));
-	printf("sizeof(t_block)=%d\n", sizeof(t_block));
+	printf("sizeof(t_page)=%ld\n" , sizeof(t_page));
+	printf("sizeof(t_block)=%ld\n", sizeof(t_block));
 
 	char* tab[100];
 
 	for (int i=0;i<10;i++) {
-		tab[i] = malloc_test2(60);
+		tab[i] = (char*)ft_malloc(60);
 	}
 	for (int i=0;i<10;i++) {
-		for(char j=0;j<50;j++)
-			tab[i][j] = 'a'+ i;
+		for(int j=0;j<50;j++)
+			tab[i][j] = ('a'+ i);
 		tab[i][50] = 0;
 	}
-	// char *str3 = malloc_test2(500);
-	// char *str4 = malloc_test2(10);
-	// *str4 = malloc_test2(10);
-	// *str4 = malloc_test2(10);
-	// *str4 = malloc_test2(10);
-	// *str4 = malloc_test2(10);
+	ft_malloc(500);
+	ft_malloc(10);
+	ft_malloc(10);
+	ft_malloc(10);
+	ft_malloc(10);
+	ft_malloc(10);
+	ft_malloc(10);
+	ft_malloc(1025);
 
-	char *str5 = malloc_test2(10);
-
-	char *str6 = malloc_test2(1025);
-
-	//memcpy(str1, "0000000000000000", 16);
-
-	printf("sizeof(int)=%d\n", sizeof(int));
 
 	print_pages(pages);
 
