@@ -6,15 +6,24 @@
 #    By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/20 21:46:05 by adoussau          #+#    #+#              #
-#    Updated: 2017/11/20 21:58:26 by adoussau         ###   ########.fr        #
+#    Updated: 2017/12/01 00:33:12 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-STATIC_EXE	= malloc
-DEBUG_EXE	= malloc_debug
-GPROF_EXE	= malloc_gprof
+UNAME_S := $(shell uname -s)
 
-SRC		=	main.c
+ifeq ($(HOSTTYPE),)
+	HOSTTYPE := $(shell uname -m)_$(UNAME_S)
+endif
+
+DYNAMIC_LIB	= libft_malloc_$(HOSTTYPE).so
+DEBUG_LIB	= libft_malloc_$(HOSTTYPE)_debug.so
+
+LIBNAME		= ft_malloc_$(HOSTTYPE)
+DEBUGLIBNAME= ft_malloc_$(HOSTTYPE)_debug
+LINKNAME	= libft_malloc.so
+
+SRC		=	malloc.c
 
 HEAD_DIR	= includes
 SRC_DIR		= src
@@ -23,23 +32,24 @@ STATIC_DIR	= static
 GPROF_DIR	= gprof
 C_HEAD_DIR	= debug
 
+DYNAMIC_DIR	= dynamic
+
 LIBFT_STATIC= libft/libft.a
 LIBFT_DEBUG	= libft/libft_debug.a
 LIBFT_HEAD	= libft/includes/
 
 STATIC_OBJ	= $(patsubst %.c,$(STATIC_DIR)/%.o,$(SRC))
 DEBUG_OBJ	= $(patsubst %.c,$(DEBUG_DIR)/%.o,$(SRC))
-GPROF_OBJ	= $(patsubst %.c,$(GPROF_DIR)/%.o,$(SRC))
+DYNAMIC_OBJ	= $(patsubst %.c,$(DYNAMIC_DIR)/%.o,$(SRC))
 
 CC			= gcc -fdiagnostics-color=always
 NORMINETTE	= ~/project/colorminette/colorminette
-OPTI		= O3
-OPTI_DEBUG	= O0
+OPTI		= -O3
+OPTI_DEBUG	= -O0
+DEPENDS		= -MT $@ -MD -MP -MF $(subst .o,.d,$@)
 
 OBJ		= $(SRC:.c=.o)
 CC		= gcc -O3 -fdiagnostics-color=always
-
-UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S), Linux)
 	FLAGS		= -Wall -Wextra
@@ -51,48 +61,50 @@ ifeq ($(UNAME_S), Darwin)
 	SRC	+=
 endif
 
+$(shell mkdir -p $(DYNAMIC_DIR) $(DEBUG_DIR))
 
-
-$(shell mkdir -p $(STATIC_DIR) $(DEBUG_DIR) $(GPROF_DIR))
-
-all: $(STATIC_EXE)
+all: $(DYNAMIC_LIB)
 	@echo "Compilation terminee. (realease)"
 
-debug: $(DEBUG_EXE)
+debug: $(DEBUG_LIB)
 	@echo "Compilation terminee. (debug)"
 
-gprof: $(GPROF_EXE)
-	@echo "Compilation terminee. (gprof)"
 
-###############################################################################################################
+$(DYNAMIC_LIB): $(LIBFT_STATIC) $(DYNAMIC_OBJ)
+	$(CC) $(OPTI) -shared -o $@ $(DYNAMIC_OBJ) $(LIBFT_STATIC)
+	ln -fs $(DYNAMIC_LIB) $(LINKNAME)
 
-$(DEBUG_EXE): $(DEBUG_OBJ) $(LIBFT_DEBUG)
-	$(CC) -$(OPTI_DEBUG) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $(DEBUG_EXE) $(DEBUG_OBJ) $(LIBFT_DEBUG) $(FLAGS) -g
+$(DEBUG_LIB): $(LIBFT_DEBUG) $(DEBUG_OBJ)
+	$(CC) $(OPTI) -g -shared -o $@ $(DYNAMIC_OBJ) $(LIBFT_STATIC)
 
-$(STATIC_EXE): $(STATIC_OBJ) $(LIBFT_STATIC)
-	$(CC) -$(OPTI) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ $(STATIC_OBJ) $(LIBFT_STATIC) $(FLAGS)
+-include $(DYNAMIC_OBJ:.o=.d)
 
-$(GPROF_EXE): $(GPROF_OBJ) $(LIBFT_STATIC)
-	$(CC) -$(OPTI) -pg -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ $(GPROF_OBJ) $(LIBFT_STATIC) $(FLAGS)
+$(DYNAMIC_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(FLAGS) $(OPTI) -fPIC $(DEPENDS) -I$(HEAD_DIR) -I$(LIBFT_HEAD) -o $@ -c $<
 
-################################################################################################################
-
-$(STATIC_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) -$(OPTI) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS)
+-include $(DEBUG_OBJ:.o=.d)
 
 $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) -$(OPTI_DEBUG) -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS) -g
+	$(CC) $(FLAGS) -g -fPIC $(DEPENDS) -I$(HEAD_DIR) -I$(LIBFT_HEAD) -o $@ -c $<
 
-$(GPROF_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) -$(OPTI) -pg -I $(HEAD_DIR) -I $(LIBFT_HEAD) -o $@ -c $< $(FLAGS) -g
 
-################################################################################################################
 
 $(LIBFT_STATIC):
 	make -C libft/ libft.a
 
 $(LIBFT_DEBUG):
 	make -C libft/ libft_debug.a
+
+tests: $(DYNAMIC_LIB)
+	$(CC) -o test0 test_srcs/test0.c  -L. -l$(LIBNAME) -I$(HEAD_DIR) -I$(LIBFT_HEAD)
+	$(CC) -o test1 test_srcs/test1.c  -L. -l$(LIBNAME) -I$(HEAD_DIR) -I$(LIBFT_HEAD)
+	$(CC) -o test2 test_srcs/test2.c  -L. -l$(LIBNAME) -I$(HEAD_DIR) -I$(LIBFT_HEAD)
+	$(CC) -o my_test3 test_srcs/test3.c -L. -l$(LIBNAME) -I$(HEAD_DIR) -I$(LIBFT_HEAD)
+	$(CC) -o my_test3+ test_srcs/test3+.c -L. -l$(LIBNAME) -I$(HEAD_DIR) -I$(LIBFT_HEAD)
+	$(CC) -o my_test4 test_srcs/test4.c -L. -l$(LIBNAME) -I$(HEAD_DIR) -I$(LIBFT_HEAD)
+	$(CC) -O0 -o my_test5 test_srcs/test5.c -L. -l$(LIBNAME) -I$(HEAD_DIR) -I$(LIBFT_HEAD)
+
+
 
 .PHONY: clean fclean re debug norme gprof
 
