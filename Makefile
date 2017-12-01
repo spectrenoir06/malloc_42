@@ -6,7 +6,7 @@
 #    By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/20 21:46:05 by adoussau          #+#    #+#              #
-#    Updated: 2017/12/01 00:33:12 by adoussau         ###   ########.fr        #
+#    Updated: 2017/12/01 03:19:23 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,11 +109,11 @@ tests: $(DYNAMIC_LIB)
 .PHONY: clean fclean re debug norme gprof
 
 clean:
-	rm -f $(STATIC_OBJ) $(DEBUG_OBJ) $(GPROF_OBJ)
+	rm -f $(DYNAMIC_OBJ) $(DEBUG_OBJ)
 	make -C libft clean
 
 fclean: clean
-	rm -f $(STATIC_EXE) $(DEBUG_EXE) $(GPROF_EXE)
+	rm -f $(DYNAMIC_LIB) $(DEBUG_LIB) $(LINKNAME)
 	make -C libft fclean
 
 norme:

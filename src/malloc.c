@@ -6,14 +6,14 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:03:30 by adoussau          #+#    #+#             */
-/*   Updated: 2017/12/01 00:32:00 by adoussau         ###   ########.fr       */
+/*   Updated: 2017/12/01 03:29:32 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
 #include <math.h>
-#include "malloc.h"
+#include "libft_malloc.h"
 #include <sys/mman.h>
 
 t_page *pages = NULL;
@@ -161,7 +161,7 @@ void print_block(t_block *b) {
 	printf("\t\tSize:  %zu  (real: %zu)\n", b->size, b->size + sizeof(t_block));
 	printf("\t\tState: %d\n", b->state);
 	printf("\t\tData:  %p\n", (b + 1));
-	printf("\t\tData:  \"%s\"\n", (char *)(b + 1));
+	//printf("\t\tData:  \"%s\"\n", (char *)(b + 1));
 	printf("\t\tData:  ");
 
 	int size = b->size < 25 ? b->size : 25;
@@ -306,107 +306,3 @@ void *realloc(void *ptr, size_t size) {
 void show_alloc_mem() {
 	print_pages(pages);
 }
-
-//
-// int		main(int argc, char **argv)
-// {
-// 	(void)argc;
-// 	(void)argv;
-// 	printf("getpagesize() = %d\n", getpagesize());
-//
-// 	printf("sizeof(t_page)=%ld\n" , sizeof(t_page));
-// 	printf("sizeof(t_block)=%ld\n", sizeof(t_block));
-//
-// 	// char* tab[100];
-// 	//
-// 	// for (int i=0;i<5;i++) {
-// 	// 	tab[i] = (char*)malloc(2029);
-// 	// }
-// 	// for (int i=0; i<5; i++) {
-// 	// 	for (int j=0; j<10; j++)
-// 	// 		tab[i][j] = ('a'+ i);
-// 	// 	tab[i][10] = 0;
-// 	// }
-//
-// 	// for (int i=0;i<5;i++) {
-// 	// 	tab[i+5] = (char*)malloc(100);
-// 	// }
-// 	// for (int i=0; i<5; i++) {
-// 	// 	for (int j=0; j<10; j++)
-// 	// 		tab[i+5][j] = ('a'+ i);
-// 	// 	tab[i+5][10] = 0;
-// 	// }
-//
-//
-//
-// 	// malloc(500);
-//
-// 	// char * str = malloc(10);
-//
-// 	// memcpy(str,"012345678\0",10);
-// 	//
-// 	// malloc(10);
-// 	// malloc(10);
-// 	// malloc(10);
-// 	// malloc(10);
-// 	// malloc(10);
-//
-// 	// malloc(1025);
-//
-// 	// print_pages(pages);
-//
-//
-// 	// realloc(str, 20);
-// 	//
-// 	// for (int i=0; i < 10; i++) {
-// 	// 	realloc(str, i*10);
-// 	// 	print_page(pages);
-// 	// }
-//
-// 	// memcpy(str,"0123456789012345678\0", 20);
-// 	//
-// 	// free(tab[0]);
-// 	// free(tab[1]);
-// 	// free(tab[2]);
-// 	// free(tab[3]);
-// 	// free(tab[4]);
-// 	//
-//
-// 	// free(tab[0+5]);
-// 	// free(tab[1+5]);
-// 	// free(tab[2+5]);
-// 	// free(tab[3+5]);
-// 	// free(tab[4+5]);
-//
-//
-// 	// malloc(10);
-// 	// malloc(10);
-// 	// malloc(10);
-// 	//
-//
-// 	int i;
-// 	char *addr;
-//
-// 	i = 0;
-// 	while (i < 1024)
-// 	{
-// 		addr = (char*)malloc(1024);
-// 		addr[0] = 42;
-// 		free(addr);
-// 		i++;
-// 	}
-//
-//
-//
-// 	print_pages(pages);
-//
-//
-//
-// 	// memcpy(str2, "1111111111111111", 16);
-// 	// memcpy(str3, "0123456789012345", 16);
-// 	// memcpy(str4, "0123456789012345", 16);
-//
-// 	// memcpy(str, "0123456789", 10);
-//
-// 	return (0);
-// }

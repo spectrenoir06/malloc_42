@@ -4,7 +4,10 @@ malloc_debug
 static
 debug
 gprof
+dynamic
 
 *.o
 *.a
 *.so
+
+*.gch

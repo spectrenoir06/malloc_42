@@ -75,7 +75,7 @@ dynamic/malloc.o: src/malloc.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
- /usr/include/x86_64-linux-gnu/bits/mathinline.h includes/malloc.h \
+ /usr/include/x86_64-linux-gnu/bits/mathinline.h includes/libft_malloc.h \
  /usr/include/x86_64-linux-gnu/sys/mman.h \
  /usr/include/x86_64-linux-gnu/bits/mman.h \
  /usr/include/x86_64-linux-gnu/bits/mman-linux.h
@@ -256,7 +256,7 @@ libft/includes/libft.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathinline.h:
 
-includes/malloc.h:
+includes/libft_malloc.h:
 
 /usr/include/x86_64-linux-gnu/sys/mman.h:
 
