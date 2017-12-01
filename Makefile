@@ -6,7 +6,7 @@
 #    By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/20 21:46:05 by adoussau          #+#    #+#              #
-#    Updated: 2017/12/01 03:19:23 by adoussau         ###   ########.fr        #
+#    Updated: 2017/12/01 03:59:12 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,8 @@ $(DYNAMIC_LIB): $(LIBFT_STATIC) $(DYNAMIC_OBJ)
 	ln -fs $(DYNAMIC_LIB) $(LINKNAME)
 
 $(DEBUG_LIB): $(LIBFT_DEBUG) $(DEBUG_OBJ)
-	$(CC) $(OPTI) -g -shared -o $@ $(DYNAMIC_OBJ) $(LIBFT_STATIC)
+	$(CC) $(OPTI_DEBUG) -shared -o $@ $(DEBUG_OBJ) $(LIBFT_DEBUG)
+	ln -fs $(DEBUG_LIB) $(LINKNAME)
 
 -include $(DYNAMIC_OBJ:.o=.d)
 
@@ -85,7 +86,7 @@ $(DYNAMIC_DIR)/%.o: $(SRC_DIR)/%.c
 -include $(DEBUG_OBJ:.o=.d)
 
 $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(FLAGS) -g -fPIC $(DEPENDS) -I$(HEAD_DIR) -I$(LIBFT_HEAD) -o $@ -c $<
+	$(CC) $(OPTI_DEBUG) $(FLAGS) -g -fPIC $(DEPENDS) -I$(HEAD_DIR) -I$(LIBFT_HEAD) -o $@ -c $<
 
 
 

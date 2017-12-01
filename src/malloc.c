@@ -6,7 +6,7 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:03:30 by adoussau          #+#    #+#             */
-/*   Updated: 2017/12/01 03:29:32 by adoussau         ###   ########.fr       */
+/*   Updated: 2017/12/01 04:33:50 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "libft_malloc.h"
 #include <sys/mman.h>
 
-t_page *pages = NULL;
+t_page *g_pages = NULL;
 
 void split_block(t_block *block, size_t size) {
 	// printf("Split bloc	k\n");
@@ -119,10 +119,11 @@ t_page	*allocate_new_page(size_t s) {
 }
 
 void *malloc(size_t s) {
+	// printf("malloc\n");
 	t_page *ptr_page = NULL;
 	// t_page *last_page = NULL;
 
-	ptr_page = pages;
+	ptr_page = g_pages;
 	char page_type = getPageType(s);
 
 	if (page_type != LARGE_TYPE) {
@@ -143,12 +144,12 @@ void *malloc(size_t s) {
 	t_page *new_page = allocate_new_page(s);
 	if (new_page) {
 		allocate_block(new_page->data, s);
-		if (pages == NULL)
-			pages = new_page;
+		if (g_pages == NULL)
+			g_pages = new_page;
 		else {
-			new_page->next = pages;
-			pages->prev = new_page;
-			pages = new_page;
+			new_page->next = g_pages;
+			g_pages->prev = new_page;
+			g_pages = new_page;
 		}
 		return (new_page->data + 1);
 	}
@@ -203,7 +204,7 @@ void print_pages(t_page *p) {
 
 
 t_block *search_block(void* ptr, t_page **page) {
-	t_page *ptr_page = pages;
+	t_page *ptr_page = g_pages;
 	t_block *ptr_block;
 	while (ptr_page) {
 		ptr_block = ptr_page->data;
@@ -241,8 +242,8 @@ void merge_free_block(t_block *b) {
 }
 
 void free_page(t_page *page) {
-	if (page == pages) {
-		pages = page->next;
+	if (page == g_pages) {
+		g_pages = page->next;
 		if (page->next)
 			page->next->prev = NULL;
 	}
@@ -304,5 +305,5 @@ void *realloc(void *ptr, size_t size) {
 }
 
 void show_alloc_mem() {
-	print_pages(pages);
+	print_pages(g_pages);
 }

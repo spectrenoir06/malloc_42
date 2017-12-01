@@ -6,7 +6,7 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:45:53 by adoussau          #+#    #+#             */
-/*   Updated: 2017/12/01 03:21:55 by adoussau         ###   ########.fr       */
+/*   Updated: 2017/12/01 03:49:23 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,7 @@ void *malloc(size_t s);
 void *realloc(void *ptr, size_t size);
 void free(void *ptr);
 void show_alloc_mem();
+
+t_page *g_pages;
 
 #endif

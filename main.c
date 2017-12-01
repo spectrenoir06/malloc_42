@@ -9,8 +9,13 @@ int		main(int argc, char **argv)
 	(void)argv;
 	// printf("getpagesize() = %d\n", getpagesize());
 
-	printf("sizeof(t_page)=%ld\n" , sizeof(t_page));
-	printf("sizeof(t_block)=%ld\n", sizeof(t_block));
+	// printf("g_pages = %p\n", g_pages);
+	//
+	//
+	// printf("sizeof(t_page)=%ld\n" , sizeof(t_page));
+	// printf("sizeof(t_block)=%ld\n", sizeof(t_block));
+
+	show_alloc_mem();
 
 	// char* tab[100];
 	//
@@ -40,11 +45,11 @@ int		main(int argc, char **argv)
 
 	// memcpy(str,"012345678\0",10);
 	//
-	malloc(10);
-	malloc(10);
-	malloc(10);
-	malloc(10);
-	malloc(10);
+	// malloc(10);
+	// malloc(10);
+	// malloc(10);
+	// malloc(10);
+	// malloc(10);
 
 	// malloc(1025);
 
