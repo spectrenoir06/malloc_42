@@ -15,7 +15,7 @@ int		main(int argc, char **argv)
 	// printf("sizeof(t_page)=%ld\n" , sizeof(t_page));
 	// printf("sizeof(t_block)=%ld\n", sizeof(t_block));
 
-	show_alloc_mem();
+	// show_alloc_mem();
 
 	// char* tab[100];
 	//

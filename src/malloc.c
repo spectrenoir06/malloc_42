@@ -6,7 +6,7 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:03:30 by adoussau          #+#    #+#             */
-/*   Updated: 2017/12/01 04:33:50 by adoussau         ###   ########.fr       */
+/*   Updated: 2017/12/01 18:04:40 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,6 @@ t_page	*allocate_new_page(size_t s) {
 
 		// printf("New block\n");
 		t_block *block = (t_block *)(new_page + 1);
-		// block->magic =  0x42;
-		// block->magic2 = 0x43;
 		block->size = page_size - sizeof(t_block) - sizeof(t_page);
 		block->prev = NULL;
 		block->next = NULL;
@@ -119,9 +117,7 @@ t_page	*allocate_new_page(size_t s) {
 }
 
 void *malloc(size_t s) {
-	// printf("malloc\n");
 	t_page *ptr_page = NULL;
-	// t_page *last_page = NULL;
 
 	ptr_page = g_pages;
 	char page_type = getPageType(s);
@@ -136,7 +132,6 @@ void *malloc(size_t s) {
 					return (block+1);
 				}
 			}
-			// last_page = ptr_page;
 			ptr_page = ptr_page->next;
 		}
 	}
@@ -210,8 +205,6 @@ t_block *search_block(void* ptr, t_page **page) {
 		ptr_block = ptr_page->data;
 		while (ptr_block) {
 			if (ptr_block + 1 == ptr) {
-				// printf("block found for %p\n",ptr);
-				// print_block(ptr_block);
 				*page = ptr_page;
 				return (ptr_block);
 			}
