@@ -41,14 +41,15 @@ int		main(int argc, char **argv)
 
 	// malloc(500);
 
-	// char * str = malloc(10);
+	char * str = malloc(10);
 
-	// memcpy(str,"012345678\0",10);
-	//
-	// malloc(10);
-	// malloc(10);
-	// malloc(10);
-	// malloc(10);
+	//memcpy(str,"01234567\xAA\0",10);
+	str[0] = 0xAF;
+
+	malloc(10);
+	malloc(10);
+	malloc(10);
+	malloc(10);
 	// malloc(10);
 
 	// malloc(1025);

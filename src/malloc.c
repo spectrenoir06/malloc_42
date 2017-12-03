@@ -6,26 +6,25 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:03:30 by adoussau          #+#    #+#             */
-/*   Updated: 2017/12/01 18:04:40 by adoussau         ###   ########.fr       */
+/*   Updated: 2017/12/03 22:53:21 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+// #include "libft.h"
 #include <stdio.h>
 #include <math.h>
 #include "libft_malloc.h"
 #include <sys/mman.h>
+#include <string.h>
+#include "print.h"
 
 t_page *g_pages = NULL;
 
-void split_block(t_block *block, size_t size) {
-	// printf("Split bloc	k\n");
-	size_t size_new = block->size - sizeof(t_block) - size;
+t_block *split_block(t_block *block, size_t size) {
+	size_t size_new;
+	t_block	*new_blocks;
 
-	// printf("splitblock: block->size: %ld size: %ld size_new: %ld\n",block->size, size,size_new);
-
-	t_block	*new_blocks = NULL;
-
+	size_new = block->size - sizeof(t_block) - size;
 	block->size = size;
 	block->state = 0x01;
 
@@ -37,29 +36,27 @@ void split_block(t_block *block, size_t size) {
 	new_blocks->size = size_new;
 	new_blocks->prev = block;
 	new_blocks->state = 0x00;
+	return (new_blocks);
 }
 
-void allocate_block(t_block *block, size_t size) {
+t_block *allocate_block(t_block *block, size_t size) {
 	if (block->size > (size + sizeof(t_block) * 2))
-		split_block(block, size);
-	else {
+		return (split_block(block, size));
+	else
 		block->state = 0x01;
-	}
-
+	return (block);
 }
 
 t_block *getFreeBlock(t_page *p, size_t s) {
-	t_block *ptr_block = NULL;
+	t_block *ptr_block;
 
 	ptr_block = p->data;
 	while (ptr_block != NULL) {
-		// printf("Block Found: data=%d, block_size=%d a:%d\n", ptr_block->size, s, s + (sizeof(t_block) * 2));
-		if (!ptr_block->state && (ptr_block->size > (s + (sizeof(t_block))))) {
-			return ptr_block;
-		}
+		if (!ptr_block->state && (ptr_block->size > (s + (sizeof(t_block)))))
+			return (ptr_block);
 		ptr_block = ptr_block->next;
 	}
-	return NULL;
+	return (NULL);
 }
 
 size_t getPageSize(size_t s) {
@@ -68,7 +65,7 @@ size_t getPageSize(size_t s) {
 	else if (s <= SMALL_MAX_ALLOC)
 		return (SMALL_SIZE);
 	else
-		return (s + sizeof(t_page) + sizeof(t_block)*1);
+		return (s + sizeof(t_page) + sizeof(t_block) * 1);
 }
 
 size_t getPageType(size_t s) {
@@ -83,7 +80,6 @@ size_t getPageType(size_t s) {
 
 t_page	*allocate_new_page(size_t s) {
 	t_page *new_page;
-	// printf("New Page\n");
 	size_t page_size = getPageSize(s);
 
 	new_page = (t_page*)mmap(
@@ -95,43 +91,37 @@ t_page	*allocate_new_page(size_t s) {
 		0
 	);
 	if (new_page) {
-		//bzero(new_page, s + sizeof(t_page)+ sizeof(t_block));
 		new_page->type = getPageType(s);
 		new_page->size = page_size - sizeof(t_page);
-		new_page->prev = NULL;
-		new_page->next = NULL;
-		new_page->data = NULL;
+		// new_page->prev = NULL;
+		// new_page->next = NULL;
+		// new_page->data = NULL;
 
-		// printf("New block\n");
 		t_block *block = (t_block *)(new_page + 1);
 		block->size = page_size - sizeof(t_block) - sizeof(t_page);
-		block->prev = NULL;
-		block->next = NULL;
-		block->state = 0;
+		// block->prev = NULL;
+		// block->next = NULL;
+		// block->state = 0;
 
 		new_page->data = block;
 
 		return (new_page);
 	}
-	return NULL;
+	return (NULL);
 }
 
 void *malloc(size_t s) {
 	t_page *ptr_page = NULL;
+	t_block *block;
 
 	ptr_page = g_pages;
 	char page_type = getPageType(s);
 
 	if (page_type != LARGE_TYPE) {
 		while (ptr_page) {
-			//printf("Pages Found\n");
-			if (ptr_page->type == page_type) {
-				t_block *block = getFreeBlock(ptr_page, s);
-				if (block != NULL) {
-					allocate_block(block, s);
-					return (block+1);
-				}
-			}
+			if (ptr_page->type == page_type)
+				if ((block = getFreeBlock(ptr_page, s)))
+					return (allocate_block(block, s) + 1);
 			ptr_page = ptr_page->next;
 		}
 	}
@@ -153,33 +143,37 @@ void *malloc(size_t s) {
 
 
 void print_block(t_block *b) {
-	printf("\t\t----------Block-----------\n");
-	printf("\t\tSize:  %zu  (real: %zu)\n", b->size, b->size + sizeof(t_block));
-	printf("\t\tState: %d\n", b->state);
-	printf("\t\tData:  %p\n", (b + 1));
-	//printf("\t\tData:  \"%s\"\n", (char *)(b + 1));
-	printf("\t\tData:  ");
+	putstr("\t\t----------Block-----------\n\t\tSize:  ");
+	putnbr(b->size);
+	putstr("  (real: ");
+	putnbr(b->size + sizeof(t_block));
+	putstr(")\n\t\tState: ");
+	putnbr(b->state);
+	putstr("\n\t\tData:  ");
 
 	int size = b->size < 25 ? b->size : 25;
 	for (int i=0; i<size; i++) {
-		printf("%02x ",*(((unsigned char *)(b+1)) + i));
+		printhex(*(((unsigned char *)(b+1)) + i));
+		write(1," ",1);
 	}
-	printf("\n");
+	write(1,"\n",1);
 }
 
 void print_page(t_page *p) {
-	printf("\t------------Page------------\n");
-	printf("\tSize:   %ld  (real: %ld)\n", p->size, p->size + sizeof(t_page));
-	printf("\ttype:   %d (",p->type);
+	putstr("\t------------Page------------\n\tSize: ");
+	putnbr(p->size);
+	putstr("  (real: ");
+	putnbr(p->size + sizeof(t_page));
+	putstr(")\n\ttype: ");
 	switch (p->type) {
 		case 1:
-			printf("TINY)\n");
+			putstr("TINY\n");
 			break;
 		case 2:
-			printf("SMALL)\n");
+			putstr("SMALL\n");
 			break;
 		case 3:
-			printf("LARGE)\n");
+			putstr("LARGE\n");
 			break;
 	}
 	t_block *b = p->data;
@@ -190,7 +184,7 @@ void print_page(t_page *p) {
 }
 
 void print_pages(t_page *p) {
-	printf("\n---- PRINT PAGE ----\n");
+	putstr("\n---- PRINT PAGE ----\n");
 	while (p) {
 		print_page(p);
 		p = p->next;
@@ -274,7 +268,6 @@ void *realloc(void *ptr, size_t size) {
 			return (ptr);
 		} else {
 			if (ptr_block->next && ptr_block->next->state == 0 && (size <= ( ptr_block->size + ptr_block->next->size))) {
-				// printf("merge\n");
 				t_block *new_block = (t_block *)(((char *)(ptr_block + 1)) + size);
 				new_block->size = ptr_block->next->size - (size  - ptr_block->size);
 				new_block->next = ptr_block->next->next;
@@ -285,11 +278,11 @@ void *realloc(void *ptr, size_t size) {
 				if (new_block->next)
 					new_block->next->prev = new_block;
 			} else {
-				char *ptr = malloc(size);
-				if (ptr) {
-					memcpy(ptr, ptr_block + 1, ptr_block->size);
-					ptr_block->state = 0;
-					return (ptr);
+				char *new_ptr = malloc(size);
+				if (new_ptr) {
+					memcpy(new_ptr, ptr_block + 1, ptr_block->size);
+					free(ptr);
+					return (new_ptr);
 				}
 			}
 		}

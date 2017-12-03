@@ -6,7 +6,7 @@
 #    By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/20 21:46:05 by adoussau          #+#    #+#              #
-#    Updated: 2017/12/01 03:59:12 by adoussau         ###   ########.fr        #
+#    Updated: 2017/12/03 19:19:55 by adoussau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ LIBNAME		= ft_malloc_$(HOSTTYPE)
 DEBUGLIBNAME= ft_malloc_$(HOSTTYPE)_debug
 LINKNAME	= libft_malloc.so
 
-SRC		=	malloc.c
+SRC		=	malloc.c \
+			print.c
 
 HEAD_DIR	= includes
 SRC_DIR		= src
@@ -70,12 +71,12 @@ debug: $(DEBUG_LIB)
 	@echo "Compilation terminee. (debug)"
 
 
-$(DYNAMIC_LIB): $(LIBFT_STATIC) $(DYNAMIC_OBJ)
-	$(CC) $(OPTI) -shared -o $@ $(DYNAMIC_OBJ) $(LIBFT_STATIC)
+$(DYNAMIC_LIB): $(DYNAMIC_OBJ)
+	$(CC) $(OPTI) -shared -o $@ $(DYNAMIC_OBJ)
 	ln -fs $(DYNAMIC_LIB) $(LINKNAME)
 
-$(DEBUG_LIB): $(LIBFT_DEBUG) $(DEBUG_OBJ)
-	$(CC) $(OPTI_DEBUG) -shared -o $@ $(DEBUG_OBJ) $(LIBFT_DEBUG)
+$(DEBUG_LIB): $(DEBUG_OBJ)
+	$(CC) $(OPTI_DEBUG) -shared -o $@ $(DEBUG_OBJ)
 	ln -fs $(DEBUG_LIB) $(LINKNAME)
 
 -include $(DYNAMIC_OBJ:.o=.d)

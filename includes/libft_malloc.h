@@ -6,11 +6,12 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:45:53 by adoussau          #+#    #+#             */
-/*   Updated: 2017/12/01 03:49:23 by adoussau         ###   ########.fr       */
+/*   Updated: 2017/12/03 17:58:10 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #ifndef LIBFT_MALLOC_H
 # define LIBFT_MALLOC_H
