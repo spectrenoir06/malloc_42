@@ -6,7 +6,7 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:03:30 by adoussau          #+#    #+#             */
-/*   Updated: 2017/12/03 22:53:21 by adoussau         ###   ########.fr       */
+/*   Updated: 2017/12/03 23:10:29 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ t_block *split_block(t_block *block, size_t size) {
 	new_blocks = (t_block*)(((void*)(block + 1)) + size);
 
 	new_blocks->next = block->next;
+	if (new_blocks->next)
+		new_blocks->next->prev = new_blocks;
 	block->next = new_blocks;
 
 	new_blocks->size = size_new;
