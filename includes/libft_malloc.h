@@ -66,6 +66,7 @@ size_t				get_page_size(size_t s);
 size_t				get_page_type(size_t s);
 t_page				*allocate_new_page(size_t s);
 void				free_page(t_page *page);
+t_block				*search_block(void *ptr, t_page **page);
 
 t_page				*g_pages;
 

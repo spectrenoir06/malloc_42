@@ -28,6 +28,7 @@ SRC		=	malloc.c \
 			block.c \
 			page.c \
 			print_mem.c \
+			realloc.c \
 
 HEAD_DIR	= includes
 SRC_DIR		= src
