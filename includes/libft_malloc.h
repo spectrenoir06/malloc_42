@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-
 #ifndef LIBFT_MALLOC_H
 # define LIBFT_MALLOC_H
+
+# include <stdlib.h>
+# include <unistd.h>
 
 # define TINY_SIZE (2 * getpagesize())
 # define TINY_MAX_ALLOC 128
@@ -43,11 +43,11 @@ typedef struct		s_page
 	char			type;
 }					t_page;
 
-void *malloc(size_t s);
-void *realloc(void *ptr, size_t size);
-void free(void *ptr);
-void show_alloc_mem();
+void				*malloc(size_t s);
+void				*realloc(void *ptr, size_t size);
+void				free(void *ptr);
+void				show_alloc_mem(void);
 
-t_page *g_pages;
+t_page				*g_pages;
 
 #endif
