@@ -48,6 +48,10 @@ void				*realloc(void *ptr, size_t size);
 void				free(void *ptr);
 void				show_alloc_mem(void);
 
+void				malloc_putstr(const char *s);
+void				malloc_putnbr(int nb);
+void				malloc_printhex(char c);
+
 t_page				*g_pages;
 
 #endif

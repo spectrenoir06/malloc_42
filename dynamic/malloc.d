@@ -50,7 +50,7 @@ dynamic/malloc.o: src/malloc.c /usr/include/stdio.h \
   /usr/include/sys/_types/_uuid_t.h /usr/include/gethostuuid.h \
   /usr/include/sys/mman.h /usr/include/string.h \
   /usr/include/sys/_types/_rsize_t.h /usr/include/sys/_types/_errno_t.h \
-  /usr/include/strings.h /usr/include/secure/_string.h includes/print.h
+  /usr/include/strings.h /usr/include/secure/_string.h
 
 /usr/include/stdio.h:
 
@@ -243,5 +243,3 @@ includes/libft_malloc.h:
 /usr/include/strings.h:
 
 /usr/include/secure/_string.h:
-
-includes/print.h:
