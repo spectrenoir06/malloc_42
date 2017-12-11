@@ -12,6 +12,7 @@
 
 #include <unistd.h>
 #include <stdio.h>
+#include "libft_malloc.h"
 
 void		malloc_putstr(const char *s)
 {

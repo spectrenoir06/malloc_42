@@ -24,7 +24,10 @@ DEBUGLIBNAME= ft_malloc_$(HOSTTYPE)_debug
 LINKNAME	= libft_malloc.so
 
 SRC		=	malloc.c \
-			print.c
+			print.c \
+			block.c \
+			page.c \
+			print_mem.c \
 
 HEAD_DIR	= includes
 SRC_DIR		= src

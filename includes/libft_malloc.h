@@ -50,7 +50,22 @@ void				show_alloc_mem(void);
 
 void				malloc_putstr(const char *s);
 void				malloc_putnbr(int nb);
-void				malloc_printhex(char c);
+void				malloc_printhex(unsigned char c);
+
+void				print_block(t_block *b);
+void				print_page(t_page *p);
+void				print_pages(t_page *p);
+
+t_block				*split_block(t_block *block, size_t size);
+t_block				*allocate_block(t_block *block, size_t size);
+t_block				*get_free_block(t_page *p, size_t s);
+void				merge_free_block(t_block *b);
+size_t				get_page_type(size_t s);
+
+size_t				get_page_size(size_t s);
+size_t				get_page_type(size_t s);
+t_page				*allocate_new_page(size_t s);
+void				free_page(t_page *page);
 
 t_page				*g_pages;
 
