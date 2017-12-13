@@ -57,12 +57,20 @@ void	print_page(t_page *p)
 	}
 }
 
-void	print_pages(t_page *p)
+void	print_pages(char hide_free)
 {
+	t_page *p;
+
+	p = g_pages;
 	malloc_putstr("\n---- PRINT PAGE ----\n");
 	while (p)
 	{
-		print_page(p);
+		print_page(p,hide_free);
 		p = p->next;
 	}
+}
+
+void	show_alloc_mem(void)
+{
+
 }

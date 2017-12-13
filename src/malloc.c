@@ -102,8 +102,3 @@ void		free(void *ptr)
 			free_page(ptr_page);
 	}
 }
-
-void		show_alloc_mem(void)
-{
-	print_pages(g_pages);
-}
