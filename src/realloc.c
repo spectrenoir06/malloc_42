@@ -12,15 +12,15 @@
 
 #include "libft_malloc.h"
 
-void static malloc_memcpy(char *ptr1, char *ptr2, size_t s)
+void		malloc_memcpy(char *ptr1, char *ptr2, size_t s)
 {
 	while (s--)
 		*ptr1++ = *ptr2++;
 }
 
-void	split_block_rea(t_block *ptr_block, size_t s)
+void		split_block_rea(t_block *ptr_block, size_t s)
 {
-	t_block *new_block;
+	t_block	*new_block;
 
 	new_block = (t_block *)(((char *)(ptr_block + 1)) + s);
 	new_block->size = ptr_block->next->size - (s - ptr_block->size);
@@ -32,9 +32,9 @@ void	split_block_rea(t_block *ptr_block, size_t s)
 		new_block->next->prev = new_block;
 }
 
-void	*rea_cpy(t_block *block, size_t s)
+void		*rea_cpy(t_block *block, size_t s)
 {
-	char *rea;
+	char	*rea;
 
 	if ((rea = malloc(s)))
 	{
