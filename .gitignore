@@ -11,3 +11,4 @@ dynamic
 *.so
 
 *.gch
+*.d
