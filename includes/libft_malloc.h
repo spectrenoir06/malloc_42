@@ -6,7 +6,7 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:45:53 by adoussau          #+#    #+#             */
-/*   Updated: 2017/12/03 17:58:10 by adoussau         ###   ########.fr       */
+/*   Updated: 2017/12/21 16:13:20 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void				malloc_putstr(const char *s);
 void				malloc_putnbr(int nb);
 void				malloc_printhex(unsigned char c);
 
-void				print_block(t_block *b);
-void				print_page(t_page *p);
-void				print_pages(t_page *p);
+void				print_block(t_block *b, char hide_free);
+void				print_page(t_page *p, char hide_free);
+void				print_pages(char hide_free);
 
 t_block				*split_block(t_block *block, size_t size);
 t_block				*allocate_block(t_block *block, size_t size);

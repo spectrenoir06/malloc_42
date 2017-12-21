@@ -6,7 +6,7 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:03:30 by adoussau          #+#    #+#             */
-/*   Updated: 2017/12/03 23:10:29 by adoussau         ###   ########.fr       */
+/*   Updated: 2017/12/21 16:58:08 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,9 @@ void		*has_free_block(size_t s)
 
 void		*malloc(size_t s)
 {
-	t_page	*ptr_page;
 	t_block	*block;
 	t_page	*new_page;
 
-	ptr_page = g_pages;
 	if ((block = has_free_block(s)))
 		return (block);
 	new_page = allocate_new_page(s);

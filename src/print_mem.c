@@ -6,17 +6,19 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 18:01:29 by adoussau          #+#    #+#             */
-/*   Updated: 2017/12/09 17:10:17 by adoussau         ###   ########.fr       */
+/*   Updated: 2017/12/21 17:03:55 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_malloc.h"
 
-void	print_block(t_block *b)
+void	print_block(t_block *b, char hide_free)
 {
 	int size;
 	int i;
 
+	if (hide_free && b->state)
+		return;
 	malloc_putstr("\t\t----------Block-----------\n\t\tSize:  ");
 	malloc_putnbr(b->size);
 	malloc_putstr("  (real: ");
@@ -34,7 +36,7 @@ void	print_block(t_block *b)
 	write(1, "\n", 1);
 }
 
-void	print_page(t_page *p)
+void	print_page(t_page *p, char hide_free)
 {
 	t_block *b;
 
@@ -52,7 +54,7 @@ void	print_page(t_page *p)
 	b = p->data;
 	while (b)
 	{
-		print_block(b);
+		print_block(b, hide_free);
 		b = b->next;
 	}
 }
@@ -65,12 +67,12 @@ void	print_pages(char hide_free)
 	malloc_putstr("\n---- PRINT PAGE ----\n");
 	while (p)
 	{
-		print_page(p,hide_free);
+		print_page(p, hide_free);
 		p = p->next;
 	}
 }
 
 void	show_alloc_mem(void)
 {
-
+	print_pages(1);
 }
