@@ -39,7 +39,7 @@ void		*rea_cpy(t_block *block, size_t s)
 	if ((rea = malloc(s)))
 	{
 		malloc_memcpy(rea, (char *)(block + 1), block->size);
-		free(block);
+		free(block + 1);
 		return (rea);
 	}
 	return (NULL);
@@ -61,7 +61,7 @@ void		*realloc(void *ptr, size_t s)
 			&& (s <= (ptr_block->size + ptr_block->next->size)))
 				split_block_rea(ptr_block, s);
 			else
-				return (rea_cpy(ptr, s));
+				return (rea_cpy(ptr_block, s));
 		}
 	}
 	return (NULL);

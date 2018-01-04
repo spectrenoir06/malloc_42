@@ -43,21 +43,16 @@ int		main(int argc, char **argv)
 
 	char * str = malloc(10);
 
-	//memcpy(str,"01234567\xAA\0",10);
-	str[0] = 0xAF;
+	memcpy(str, "01234567\xAA\0", 10);
 
 	malloc(10);
-	malloc(10);
-	malloc(10);
-	malloc(10);
-	// malloc(10);
 
 	// malloc(1025);
 
-	// show_alloc_mem();
+	show_alloc_mem();
 
 
-	// realloc(str, 20);
+	realloc(str, 20);
 	//
 	// for (int i=0; i < 10; i++) {
 	// 	realloc(str, i*10);

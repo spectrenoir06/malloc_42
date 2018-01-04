@@ -17,7 +17,7 @@ void	print_block(t_block *b, char hide_free)
 	int size;
 	int i;
 
-	if (hide_free && b->state)
+	if (hide_free && !b->state)
 		return ;
 	malloc_putstr("\t\t----------Block-----------\n\t\tSize:  ");
 	malloc_putnbr(b->size);
