@@ -49,7 +49,7 @@ int		main(int argc, char **argv)
 
 	// malloc(1025);
 
-	show_alloc_mem();
+	print_pages(0);
 
 
 	realloc(str, 20);
@@ -81,7 +81,7 @@ int		main(int argc, char **argv)
 	//
 
 
-	show_alloc_mem();
+	print_pages(0);
 
 
 

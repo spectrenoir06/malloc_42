@@ -12,6 +12,19 @@
 
 #include "libft_malloc.h"
 
+void	malloc_putaddr(char *ptr)
+{
+	int i;
+
+	printf("\n%p\n", ptr);
+	printf("\nx = %x\n", ptr);
+	i = sizeof(void*);
+	while (i--)
+	{
+		malloc_printhex(ptr);
+	}
+}
+
 void	print_block(t_block *b, char hide_free)
 {
 	int size;
@@ -25,6 +38,8 @@ void	print_block(t_block *b, char hide_free)
 	malloc_putnbr(b->size + sizeof(t_block));
 	malloc_putstr(")\n\t\tState: ");
 	malloc_putnbr(b->state);
+	malloc_putstr("\n\t\tAdresse:  ");
+	malloc_putaddr(b + 1);
 	malloc_putstr("\n\t\tData:  ");
 	size = b->size < 25 ? b->size : 25;
 	i = 0;
