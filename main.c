@@ -63,7 +63,7 @@ int		main(int argc, char **argv)
 	//
 	// memcpy(tab[0], "01234567\xAA\0", 10);
 	//
-	tab[2] = realloc(tab[0], 20);
+	tab[2] = realloc(tab[0], 20000);
 	// memcpy(tab[2], "abcdeifjk\0", 10);
 
 	print_pages(0);
