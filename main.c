@@ -41,18 +41,51 @@ int		main(int argc, char **argv)
 
 	// malloc(500);
 
-	char * str = malloc(10);
+	char *tab[5];
 
-	memcpy(str, "01234567\xAA\0", 10);
+	for (int i=0; i < 5; i++) {
+		tab[i] = NULL;
+	}
 
-	malloc(10);
 
-	// malloc(1025);
+	tab[0] = malloc(10);
+
+	memcpy(tab[0], "01234567\xAA\0", 10);
 
 	print_pages(0);
 
+	tab[1] = malloc(10);
 
-	realloc(str, 20);
+	memcpy(tab[1], "999999999\0", 10);
+	// tab[2] = malloc(10);
+	// tab[3] = malloc(10);
+	// tab[4] = malloc(10);
+	//
+	// memcpy(tab[0], "01234567\xAA\0", 10);
+	//
+	tab[2] = realloc(tab[0], 20);
+	// memcpy(tab[2], "abcdeifjk\0", 10);
+
+	print_pages(0);
+
+	for (int i=0; i < 5; i++) {
+		printf("tab[%d] = %p\n", i,tab[i]);
+	}
+
+	// strdup("test");
+
+	//printf("malloc(10) == %p\n", malloc(10));
+	// printf("malloc(10) == %p\n", malloc(10));
+	// printf("malloc(10) == %p\n", malloc(10));
+	// printf("malloc(10) == %p\n", malloc(10));
+
+
+
+
+	// print_pages(0);
+
+
+	// printf("realloc(str, 20) == %p\n", realloc(str, 20));
 	//
 	// for (int i=0; i < 10; i++) {
 	// 	realloc(str, i*10);
@@ -79,9 +112,6 @@ int		main(int argc, char **argv)
 	// malloc(10);
 	// malloc(10);
 	//
-
-
-	print_pages(0);
 
 
 

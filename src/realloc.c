@@ -6,7 +6,7 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:03:30 by adoussau          #+#    #+#             */
-/*   Updated: 2017/12/03 23:10:29 by adoussau         ###   ########.fr       */
+/*   Updated: 2018/01/04 19:02:41 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ void		*rea_cpy(t_block *block, size_t s)
 	if ((rea = malloc(s)))
 	{
 		malloc_memcpy(rea, (char *)(block + 1), block->size);
-		//free(block + 1);
-		malloc_putstr(rea);
+		free(block + 1);
 		return (rea);
 	}
 	return (NULL);

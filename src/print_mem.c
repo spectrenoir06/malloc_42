@@ -6,23 +6,21 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 18:01:29 by adoussau          #+#    #+#             */
-/*   Updated: 2017/12/21 17:03:55 by adoussau         ###   ########.fr       */
+/*   Updated: 2018/01/04 16:01:52 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_malloc.h"
 
-void	malloc_putaddr(char *ptr)
+void	malloc_putaddr(unsigned long ptr)
 {
 	int i;
+	char *ptr2 = (char *)&ptr;
 
-	printf("\n%p\n", ptr);
-	printf("\nx = %x\n", ptr);
-	i = sizeof(void*);
-	while (i--)
-	{
-		malloc_printhex(ptr);
-	}
+	malloc_putstr("0x");
+	i = 5;
+	while (i >= 0)
+		malloc_printhex(ptr2[i--]);
 }
 
 void	print_block(t_block *b, char hide_free)
@@ -39,7 +37,7 @@ void	print_block(t_block *b, char hide_free)
 	malloc_putstr(")\n\t\tState: ");
 	malloc_putnbr(b->state);
 	malloc_putstr("\n\t\tAdresse:  ");
-	malloc_putaddr(b + 1);
+	malloc_putaddr((unsigned long)(b + 1));
 	malloc_putstr("\n\t\tData:  ");
 	size = b->size < 25 ? b->size : 25;
 	i = 0;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc.c                                           :+:      :+:    :+:   */
+/*   block.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:03:30 by adoussau          #+#    #+#             */
-/*   Updated: 2017/12/03 23:10:29 by adoussau         ###   ########.fr       */
+/*   Updated: 2018/01/04 19:01:30 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_block		*split_block(t_block *block, size_t size)
 	new_blocks->size = size_new;
 	new_blocks->prev = block;
 	new_blocks->state = 0x00;
-	return (new_blocks);
+	return (block);
 }
 
 t_block		*allocate_block(t_block *block, size_t size)

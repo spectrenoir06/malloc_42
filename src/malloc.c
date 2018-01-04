@@ -6,7 +6,7 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:03:30 by adoussau          #+#    #+#             */
-/*   Updated: 2017/12/21 16:58:08 by adoussau         ###   ########.fr       */
+/*   Updated: 2018/01/04 16:36:13 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 t_page		*g_pages = NULL;
 
-void		*has_free_block(size_t s)
+t_block		*has_free_block(size_t s)
 {
 	t_page	*ptr_page;
 	t_block	*block;
@@ -29,7 +29,7 @@ void		*has_free_block(size_t s)
 		{
 			if (ptr_page->type == (char)get_page_type(s))
 				if ((block = get_free_block(ptr_page, s)))
-					return (allocate_block(block, s) + 1);
+					return (allocate_block(block, s));
 			ptr_page = ptr_page->next;
 		}
 	}
@@ -42,7 +42,7 @@ void		*malloc(size_t s)
 	t_page	*new_page;
 
 	if ((block = has_free_block(s)))
-		return (block);
+		return (block + 1);
 	new_page = allocate_new_page(s);
 	if (new_page)
 	{
