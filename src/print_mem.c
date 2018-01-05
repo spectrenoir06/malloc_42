@@ -6,7 +6,7 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/03 18:01:29 by adoussau          #+#    #+#             */
-/*   Updated: 2018/01/04 16:01:52 by adoussau         ###   ########.fr       */
+/*   Updated: 2018/01/05 18:03:20 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,15 @@ void	print_block(t_block *b, char hide_free)
 
 	if (hide_free && !b->state)
 		return ;
-	malloc_putstr("\t\t----------Block-----------\n\t\tSize:  ");
+	malloc_putstr("\t\t----------Block-----------\n\t\t\e[1mSize:  \e[21m");
 	malloc_putnbr(b->size);
-	malloc_putstr("  (real: ");
+	malloc_putstr("  (\e[1mreal:\e[21m ");
 	malloc_putnbr(b->size + sizeof(t_block));
-	malloc_putstr(")\n\t\tState: ");
+	malloc_putstr(")\n\t\t\e[1mState:\e[21m ");
 	malloc_putnbr(b->state);
-	malloc_putstr("\n\t\tAdresse:  ");
+	malloc_putstr("\n\t\t\e[1mAdresse:\e[21m  ");
 	malloc_putaddr((unsigned long)(b + 1));
-	malloc_putstr("\n\t\tData:  ");
+	malloc_putstr("\n\t\t\e[1mData:\e[21m  ");
 	size = b->size < 25 ? b->size : 25;
 	i = 0;
 	while (i < size)
@@ -53,11 +53,11 @@ void	print_page(t_page *p, char hide_free)
 {
 	t_block *b;
 
-	malloc_putstr("\t------------Page------------\n\tSize: ");
+	malloc_putstr("\t------------Page------------\n\t\e[1mSize:\e[21m ");
 	malloc_putnbr(p->size);
-	malloc_putstr("  (real: ");
+	malloc_putstr("  (\e[1mreal:\e[21m ");
 	malloc_putnbr(p->size + sizeof(t_page));
-	malloc_putstr(")\n\ttype: ");
+	malloc_putstr(")\n\t\e[1mtype:\e[21m ");
 	if (p->type == 1)
 		malloc_putstr("TINY\n");
 	if (p->type == 2)

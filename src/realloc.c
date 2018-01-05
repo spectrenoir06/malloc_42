@@ -6,7 +6,7 @@
 /*   By: adoussau <adoussau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 22:03:30 by adoussau          #+#    #+#             */
-/*   Updated: 2018/01/04 19:02:41 by adoussau         ###   ########.fr       */
+/*   Updated: 2018/01/05 18:25:56 by adoussau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		malloc_memcpy(char *ptr1, char *ptr2, size_t s)
 		*ptr1++ = *ptr2++;
 }
 
-void		split_block_rea(t_block *ptr_block, size_t s)
+t_block		*split_block_rea(t_block *ptr_block, size_t s)
 {
 	t_block	*new_block;
 
@@ -30,6 +30,7 @@ void		split_block_rea(t_block *ptr_block, size_t s)
 	ptr_block->size = s;
 	if (new_block->next)
 		new_block->next->prev = new_block;
+	return (ptr_block);
 }
 
 void		*rea_cpy(t_block *block, size_t s)
@@ -59,7 +60,7 @@ void		*realloc(void *ptr, size_t s)
 		{
 			if (ptr_block->next && ptr_block->next->state == 0
 			&& (s <= (ptr_block->size + ptr_block->next->size)))
-				split_block_rea(ptr_block, s);
+				return (split_block_rea(ptr_block, s) + 1);
 			else
 				return (rea_cpy(ptr_block, s));
 		}
