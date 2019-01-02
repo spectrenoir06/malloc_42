@@ -3,7 +3,6 @@
 #include <string.h>
 #include <libft_malloc.h>
 
-
 int		main(int argc, char **argv)
 {
 	(void)argc;
@@ -36,17 +35,17 @@ int		main(int argc, char **argv)
 
 	print_pages(0);
 
-	char *test2 = malloc(10);
+	char *test2 = (char *)malloc(10);
 	memset(test2, 0x42, 10);
-	char *dummy = malloc(1);
+	char *dummy = (char *)malloc(1);
 	print_pages(0);
 
 	for (int i=0; i<10; i++) {
-		test2 = realloc(test2, 11+i);
+		test2 = (char *)realloc(test2, 11+i);
 	}
 	print_pages(0);
 
-	test2 = realloc(test2, 10000);
+	test2 = (char *)realloc(test2, 10000);
 	print_pages(0);
 
 	free(dummy);

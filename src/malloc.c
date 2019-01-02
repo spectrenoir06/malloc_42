@@ -44,7 +44,7 @@ void		*malloc(size_t s)
 	if ((block = has_free_block(s)))
 		return (block + 1);
 	new_page = allocate_new_page(s);
-	if (new_page)
+	if (new_page && s)
 	{
 		allocate_block(new_page->data, s);
 		if (g_pages == NULL)

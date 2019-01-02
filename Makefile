@@ -50,7 +50,6 @@ OPTI_DEBUG	= -O0
 DEPENDS		= -MT $@ -MD -MP -MF $(subst .o,.d,$@)
 
 OBJ		= $(SRC:.c=.o)
-CC		= gcc -O3 -fdiagnostics-color=always
 
 ifeq ($(UNAME_S), Linux)
 	FLAGS		= -Wall -Wextra
@@ -91,14 +90,13 @@ $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c
 
 
 tests: $(DYNAMIC_LIB)
-	$(CC) -o test0 test_srcs/test0.c  -L. -l$(LIBNAME) -I$(HEAD_DIR)
-	$(CC) -o test1 test_srcs/test1.c  -L. -l$(LIBNAME) -I$(HEAD_DIR)
-	$(CC) -o test2 test_srcs/test2.c  -L. -l$(LIBNAME) -I$(HEAD_DIR)
-	$(CC) -o my_test3 test_srcs/test3.c -L. -l$(LIBNAME) -I$(HEAD_DIR)
-	$(CC) -o my_test3+ test_srcs/test3+.c -L. -l$(LIBNAME) -I$(HEAD_DIR)
-	$(CC) -o my_test4 test_srcs/test4.c -L. -l$(LIBNAME) -I$(HEAD_DIR)
-	$(CC) -O0 -o my_test5 test_srcs/test5.c -L. -l$(LIBNAME) -I$(HEAD_DIR)
-
+	$(CC) -o test0 test_srcs/test0.c   -L. -lft_malloc -I$(HEAD_DIR)
+	$(CC) -o test1 test_srcs/test1.c   -L. -lft_malloc -I$(HEAD_DIR)
+	$(CC) -o test2 test_srcs/test2.c   -L. -lft_malloc -I$(HEAD_DIR)
+	$(CC) -o test3 test_srcs/test3.c   -L. -lft_malloc -I$(HEAD_DIR)
+	$(CC) -o test3+ test_srcs/test3+.c -L. -lft_malloc -I$(HEAD_DIR)
+	$(CC) -o test4 test_srcs/test4.c   -L. -lft_malloc -I$(HEAD_DIR)
+	$(CC) -o test5 test_srcs/test5.c   -L. -lft_malloc -I$(HEAD_DIR)
 
 
 .PHONY: clean fclean re debug norme gprof

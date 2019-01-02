@@ -3,6 +3,9 @@
 
 int main()
 {
+	printf("%d\n", TINY_SIZE);
+	char* str = malloc(128);
+	strcpy(str, "Hello");
 	malloc(1024);
 	malloc(1024 * 32);
 	malloc(1024 * 1024);

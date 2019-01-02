@@ -30,15 +30,15 @@ void	print_block(t_block *b, char hide_free)
 
 	if (hide_free && !b->state)
 		return ;
-	malloc_putstr("\t\t----------Block-----------\n\t\t\e[1mSize:  \e[21m");
+	malloc_putstr("\t\t----------Block-----------\n\t\t\e[1mSize:  \e[0m");
 	malloc_putnbr(b->size);
-	malloc_putstr("  (\e[1mreal:\e[21m ");
+	malloc_putstr("  (\e[1mreal:\e[0m ");
 	malloc_putnbr(b->size + sizeof(t_block));
-	malloc_putstr(")\n\t\t\e[1mState:\e[21m ");
+	malloc_putstr(")\n\t\t\e[1mState:\e[0m ");
 	malloc_putnbr(b->state);
-	malloc_putstr("\n\t\t\e[1mAdresse:\e[21m  ");
+	malloc_putstr("\n\t\t\e[1mAdresse:\e[0m  ");
 	malloc_putaddr((unsigned long)(b + 1));
-	malloc_putstr("\n\t\t\e[1mData:\e[21m  ");
+	malloc_putstr("\n\t\t\e[1mData:\e[0m  ");
 	size = b->size < 25 ? b->size : 25;
 	i = 0;
 	while (i < size)
@@ -53,11 +53,11 @@ void	print_page(t_page *p, char hide_free)
 {
 	t_block *b;
 
-	malloc_putstr("\t------------Page------------\n\t\e[1mSize:\e[21m ");
+	malloc_putstr("\t------------Page------------\n\t\e[1mSize: ");
 	malloc_putnbr(p->size);
-	malloc_putstr("  (\e[1mreal:\e[21m ");
+	malloc_putstr("  (\e[1mreal:\e[0m ");
 	malloc_putnbr(p->size + sizeof(t_page));
-	malloc_putstr(")\n\t\e[1mtype:\e[21m ");
+	malloc_putstr(")\n\t\e[1mtype:\e[0m ");
 	if (p->type == 1)
 		malloc_putstr("TINY\n");
 	if (p->type == 2)
