@@ -14,9 +14,10 @@
 
 void	malloc_putaddr(unsigned long ptr)
 {
-	int i;
-	char *ptr2 = (char *)&ptr;
+	int		i;
+	char	*ptr2;
 
+	ptr2 = (char *)&ptr;
 	malloc_putstr("0x");
 	i = 5;
 	while (i >= 0)
