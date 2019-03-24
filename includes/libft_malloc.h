@@ -17,17 +17,16 @@
 # include <unistd.h>
 # include <math.h>
 
-
-#define arr(s) (ceil(s / getpagesize()) * getpagesize())
+# define ARR(s,b) ( ceil( ( s ) / b ) * b )
 
 # define TINY_MAX_ALLOC 128
 # define TINY_BLOCK_SIZE (TINY_MAX_ALLOC + sizeof(t_block))
-# define TINY_SIZE (ceil((TINY_BLOCK_SIZE * 100.0 + sizeof(t_page)) / getpagesize()) * getpagesize())
+# define TINY_SIZE ARR(TINY_BLOCK_SIZE * 100.0 + sizeof(t_page), getpagesize())
 # define TINY_TYPE 1
 
 # define SMALL_MAX_ALLOC 1024
 # define SMALL_BLOCK_SIZE (SMALL_MAX_ALLOC + sizeof(t_block))
-# define SMALL_SIZE (ceil((SMALL_BLOCK_SIZE * 100.0 + sizeof(t_page)) / getpagesize()) * getpagesize())
+# define SMALL_SIZE ARR(SMALL_BLOCK_SIZE * 100. + sizeof(t_page), getpagesize())
 # define SMALL_TYPE 2
 
 # define LARGE_TYPE 3
