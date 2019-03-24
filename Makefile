@@ -45,8 +45,9 @@ DYNAMIC_OBJ	= $(patsubst %.c,$(DYNAMIC_DIR)/%.o,$(SRC))
 
 CC			= gcc -fdiagnostics-color=always
 NORMINETTE	= norminette
-OPTI		= -O3
+OPTI		= -O0
 OPTI_DEBUG	= -O0
+DLFLAGS		= -shared -fPIC
 DEPENDS		= -MT $@ -MD -MP -MF $(subst .o,.d,$@)
 
 OBJ		= $(SRC:.c=.o)
@@ -71,22 +72,22 @@ debug: $(DEBUG_LIB)
 
 
 $(DYNAMIC_LIB): $(DYNAMIC_OBJ)
-	$(CC) $(OPTI) -shared -o $@ $(DYNAMIC_OBJ)
+	$(CC) $(OPTI) $(DLFLAGS) -o $@ $(DYNAMIC_OBJ) DLFLAGS
 	ln -fs $(DYNAMIC_LIB) $(LINKNAME)
 
 $(DEBUG_LIB): $(DEBUG_OBJ)
-	$(CC) $(OPTI_DEBUG) -shared -o $@ $(DEBUG_OBJ)
+	$(CC) $(OPTI_DEBUG) $(DLFLAGS) -o $@ $(DEBUG_OBJ)
 	ln -fs $(DEBUG_LIB) $(LINKNAME)
 
 -include $(DYNAMIC_OBJ:.o=.d)
 
 $(DYNAMIC_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(FLAGS) $(OPTI) -fPIC $(DEPENDS) -I$(HEAD_DIR) -o $@ -c $<
+	$(CC) $(FLAGS) $(OPTI) $(DEPENDS) -I$(HEAD_DIR) -o $@ -c $<
 
 -include $(DEBUG_OBJ:.o=.d)
 
 $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(OPTI_DEBUG) $(FLAGS) -g -fPIC $(DEPENDS) -I$(HEAD_DIR) -o $@ -c $<
+	$(CC) $(OPTI_DEBUG) $(FLAGS) -g $(DEPENDS) -I$(HEAD_DIR) -o $@ -c $<
 
 
 tests: $(DYNAMIC_LIB)
