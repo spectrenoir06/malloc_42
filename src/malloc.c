@@ -41,6 +41,10 @@ void		*malloc(size_t s)
 	t_block	*block;
 	t_page	*new_page;
 
+	malloc_putstr("malloc(");
+	malloc_putnbr(s);
+	malloc_putstr(")\n");
+
 	if ((block = has_free_block(s)))
 		return (block + 1);
 	new_page = allocate_new_page(s);

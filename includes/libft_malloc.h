@@ -17,7 +17,8 @@
 # include <unistd.h>
 # include <math.h>
 
-# define ARR(s,b) ( ceil( ( s ) / b ) * b )
+# define CEIL(v) ( ( v - (int)v ) == 0 ? (int)v : (int)v + 1 )
+# define ARR(s,b) ( CEIL( ( s ) / b ) * b )
 
 # define TINY_MAX_ALLOC 128
 # define TINY_BLOCK_SIZE (TINY_MAX_ALLOC + sizeof(t_block))

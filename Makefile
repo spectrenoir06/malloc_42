@@ -72,7 +72,7 @@ debug: $(DEBUG_LIB)
 
 
 $(DYNAMIC_LIB): $(DYNAMIC_OBJ)
-	$(CC) $(OPTI) $(DLFLAGS) -o $@ $(DYNAMIC_OBJ) DLFLAGS
+	$(CC) $(OPTI) $(DLFLAGS) -o $@ $(DYNAMIC_OBJ)
 	ln -fs $(DYNAMIC_LIB) $(LINKNAME)
 
 $(DEBUG_LIB): $(DEBUG_OBJ)
@@ -82,7 +82,7 @@ $(DEBUG_LIB): $(DEBUG_OBJ)
 -include $(DYNAMIC_OBJ:.o=.d)
 
 $(DYNAMIC_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(FLAGS) $(OPTI) $(DEPENDS) -I$(HEAD_DIR) -o $@ -c $<
+	$(CC) $(FLAGS) $(DLFLAGS) $(OPTI) $(DEPENDS) -I$(HEAD_DIR) -o $@ -c $<
 
 -include $(DEBUG_OBJ:.o=.d)
 
