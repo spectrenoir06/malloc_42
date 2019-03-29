@@ -8,6 +8,7 @@ int		main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
+	printf("%d\n", sizeof(size_t));
 	show_alloc_mem();
 
 	char* test[25];

@@ -82,12 +82,12 @@ $(DEBUG_LIB): $(DEBUG_OBJ)
 -include $(DYNAMIC_OBJ:.o=.d)
 
 $(DYNAMIC_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(FLAGS) $(DLFLAGS) $(OPTI) $(DEPENDS) -I$(HEAD_DIR) -o $@ -c $<
+	$(CC) $(FLAGS) $(OPTI) -I$(HEAD_DIR) -o $@ -c $<
 
 -include $(DEBUG_OBJ:.o=.d)
 
 $(DEBUG_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(OPTI_DEBUG) $(FLAGS) -g $(DEPENDS) -I$(HEAD_DIR) -o $@ -c $<
+	$(CC) $(OPTI_DEBUG) $(FLAGS) -g -I$(HEAD_DIR) -o $@ -c $<
 
 
 tests: $(DYNAMIC_LIB)

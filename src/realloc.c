@@ -51,6 +51,9 @@ void		*realloc(void *ptr, size_t s)
 	t_page	*ptr_page;
 	t_block	*ptr_block;
 
+	s = CEIL((s / 8.0)) * 8;
+	if (ptr == NULL)
+		return (malloc(s));
 	ptr_block = search_block(ptr, &ptr_page);
 	if (ptr_block)
 	{

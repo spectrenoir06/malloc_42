@@ -37,7 +37,7 @@ typedef struct		s_block
 	struct s_block	*next;
 	struct s_block	*prev;
 	size_t			size;
-	char			state;
+	size_t			state;
 }					t_block;
 
 typedef struct		s_page
@@ -46,7 +46,7 @@ typedef struct		s_page
 	struct s_block	*data;
 	size_t			size;
 	struct s_page	*prev;
-	char			type;
+	size_t			type;
 }					t_page;
 
 void				*malloc(size_t s);
