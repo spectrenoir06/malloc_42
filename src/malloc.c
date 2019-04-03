@@ -41,7 +41,6 @@ void		*malloc(size_t s)
 	t_block	*block;
 	t_page	*new_page;
 
-	s = CEIL((s / 8.0)) * 8;
 	if ((block = has_free_block(s)))
 		return (block + 1);
 	new_page = allocate_new_page(s);

@@ -17,17 +17,22 @@
 # include <unistd.h>
 # include <math.h>
 
-# define CEIL(v) ( ( v - (int)v ) == 0 ? (int)v : (int)v + 1 )
-# define ARR(s,b) ( CEIL( ( s ) / b ) * b )
+/*
+** # define CEIL(v) (((v) - (int)(v)) == 0 ? (int)(v) : (int)(v) + 1)
+** # define ARR(s,b) (CEIL((s) / (b)) * (b))
+** TINY_SIZE = ARR(TINY_BLOCK_SIZE * 100.0 + sizeof(t_page), getpagesize())
+** SMALL_SIZE =  ARR(SMALL_BLOCK_SIZE * 100. + sizeof(t_page), getpagesize())
+*/
 
 # define TINY_MAX_ALLOC 128
-# define TINY_BLOCK_SIZE (TINY_MAX_ALLOC + sizeof(t_block))
-# define TINY_SIZE ARR(TINY_BLOCK_SIZE * 100.0 + sizeof(t_page), getpagesize())
+# define TINY_BLOCK_SIZE (TINY_MAX_ALLOC + 32)
+# define TINY_SIZE 4 * 4096
+
 # define TINY_TYPE 1
 
 # define SMALL_MAX_ALLOC 1024
-# define SMALL_BLOCK_SIZE (SMALL_MAX_ALLOC + sizeof(t_block))
-# define SMALL_SIZE ARR(SMALL_BLOCK_SIZE * 100. + sizeof(t_page), getpagesize())
+# define SMALL_BLOCK_SIZE (SMALL_MAX_ALLOC + 32)
+# define SMALL_SIZE 26 * 4096
 # define SMALL_TYPE 2
 
 # define LARGE_TYPE 3
@@ -37,7 +42,7 @@ typedef struct		s_block
 	struct s_block	*next;
 	struct s_block	*prev;
 	size_t			size;
-	size_t			state;
+	unsigned char	state;
 }					t_block;
 
 typedef struct		s_page
@@ -46,7 +51,7 @@ typedef struct		s_page
 	struct s_block	*data;
 	size_t			size;
 	struct s_page	*prev;
-	size_t			type;
+	unsigned char	type;
 }					t_page;
 
 void				*malloc(size_t s);
